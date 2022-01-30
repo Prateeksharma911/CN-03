@@ -1,9 +1,10 @@
 import sys
 import requests
 import os
+homepage=os.path.expanduser('~')
+subject = input("Enter wiki search:")
+logname = (homepage+'/Desktop/logs')+'.txt'
 try:
-    homepage=os.path.expanduser('~')
-    subject = input("Enter wiki search:")
     url = 'https://en.wikipedia.org/w/api.php'
     params = {
             'action': 'query',
@@ -24,20 +25,17 @@ try:
         urlforlog="https://en.wikipedia.org/wiki/"
     else:
         print("Nothing found in the wikipidea named",subject)
-
-
-    logname = (homepage+'/Desktop/logs')+'.txt'
-
     try:
         file = open(logname,'a')
         if urlforlog:
             file.write(urlforlog+subject+"\n")
-        else:
-            file.write("Tried:",subject+"\n")
+        
         file.close()
 
     except:
         print('Something went wrong! Cannot tell what?')
         sys.exit(0) 
 except:
+    file = open(logname,'a')
+    file.write(("Tried to search for : "+subject+" not found\n"))
     print("An error occured")
